@@ -1,14 +1,14 @@
 package com.plcoding.goldchart.gold.data.repository
 
 import com.plcoding.goldchart.core.data.database.currency.CurrencyDAO
-import com.plcoding.goldchart.core.data.mappers.toDomain
-import com.plcoding.goldchart.core.data.mappers.toEntity
-import com.plcoding.goldchart.core.domain.model.Currency
-import com.plcoding.goldchart.core.domain.model.CurrencyCompany
-import com.plcoding.goldchart.core.domain.model.CurrencyExchange
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.model.local.Currency
+import com.plcoding.goldchart.exchange.domain.model.local.Company
+import com.plcoding.goldchart.exchange.domain.model.local.CurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
 import com.plcoding.goldchart.core.domain.utils.DataError
 import com.plcoding.goldchart.core.domain.utils.Result
+import com.plcoding.goldchart.exchange.data.mappers.toDomain
+import com.plcoding.goldchart.exchange.data.mappers.toEntity
 import com.plcoding.goldchart.gold.domain.CompanyName
 import com.plcoding.goldchart.gold.domain.datasource.PNJAssetsDataSource
 import com.plcoding.goldchart.gold.domain.datasource.SJCAssetsDataSource
@@ -23,14 +23,14 @@ class AssetsRepositoryImpl(
     private val remotePNJDataSource: PNJAssetsDataSource,
 ) : AssetsRepository {
     override suspend fun saveExchangeToDB(exchangeList: List<CurrencyExchange>) {
-        currencyDAO.insertExchangeList(exchangeList.map { it.toEntity() })
+        currencyDAO.upsertExchangeList(exchangeList.map { it.toEntity() })
     }
 
-    override suspend fun saveCompanyToDB(company: CurrencyCompany) {
-        currencyDAO.insertCompany(company.toEntity())
+    override suspend fun saveCompanyToDB(company: Company) {
+        currencyDAO.upsertCompany(company.toEntity())
     }
 
-    override suspend fun getCompanyByName(companyName: String): CurrencyCompany? {
+    override suspend fun getCompanyByName(companyName: String): Company? {
         return currencyDAO.getCompanyByName(companyName)?.toDomain()
     }
 

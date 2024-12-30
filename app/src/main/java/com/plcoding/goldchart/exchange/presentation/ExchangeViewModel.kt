@@ -4,14 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.goldchart.core.domain.utils.onError
 import com.plcoding.goldchart.core.domain.utils.onSuccess
-import com.plcoding.goldchart.exchange.domain.CurrencyRepository
-import com.plcoding.goldchart.core.domain.model.Currency
-import com.plcoding.goldchart.core.domain.model.CurrencyCompany
-import com.plcoding.goldchart.core.domain.model.CurrencyExchange
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.repository.CurrencyRepository
+import com.plcoding.goldchart.exchange.domain.model.local.Currency
+import com.plcoding.goldchart.exchange.domain.model.local.Company
+import com.plcoding.goldchart.exchange.domain.model.local.CurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
 import com.plcoding.goldchart.exchange.domain.CompanyName
 import com.plcoding.goldchart.exchange.presentation.mappers.toDomain
 import com.plcoding.goldchart.exchange.presentation.mappers.toUI
+import com.plcoding.goldchart.exchange.presentation.state.ExchangeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
@@ -110,9 +111,9 @@ class ExchangeViewModel(private val repository: CurrencyRepository) : ViewModel(
     private fun generateNewCompany(
         localCurrency: Currency?,
         remoteCurrency: RemoteCurrency,
-    ): CurrencyCompany {
-        return CurrencyCompany(
-            companyName = remoteCurrency.company.companyName,
+    ): Company {
+        return Company(
+            name = remoteCurrency.company.name,
             updatedTime = remoteCurrency.company.updatedTime
         )
     }

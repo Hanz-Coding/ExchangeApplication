@@ -11,9 +11,10 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.plcoding.goldchart.exchange.presentation.components.item.ItemCurrencyExchange
 import com.plcoding.goldchart.exchange.domain.CompanyName
 import com.plcoding.goldchart.exchange.presentation.ExchangeMenuView
-import com.plcoding.goldchart.exchange.presentation.ExchangeState
+import com.plcoding.goldchart.exchange.presentation.state.ExchangeState
 
 @Composable
 fun VCBExchangeScreenRoot(
@@ -35,7 +36,7 @@ fun VCBExchangeScreenRoot(
                 println("PullToRefreshBox isRefreshing $state.isLoading")
                 LazyColumn {
                     items(vcbCurrency.exchangeList) {
-                        ItemCurrency(it)
+                        ItemCurrencyExchange(it)
                     }
                 }
             }

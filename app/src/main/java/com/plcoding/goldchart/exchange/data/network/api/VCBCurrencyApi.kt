@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface VCBCurrencyApi {
     @GET("/api/exchangerates")
-    suspend fun fetchVCBCurrency(
+    suspend fun fetchCurrency(
         @Query("date") date: String,
     ): Response<VCBCurrencyResponseDto>
 }

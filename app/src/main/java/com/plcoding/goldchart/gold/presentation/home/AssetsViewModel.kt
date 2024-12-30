@@ -2,10 +2,10 @@ package com.plcoding.goldchart.gold.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.plcoding.goldchart.core.domain.model.Currency
-import com.plcoding.goldchart.core.domain.model.CurrencyCompany
-import com.plcoding.goldchart.core.domain.model.CurrencyExchange
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.model.local.Currency
+import com.plcoding.goldchart.exchange.domain.model.local.Company
+import com.plcoding.goldchart.exchange.domain.model.local.CurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
 import com.plcoding.goldchart.core.domain.utils.onError
 import com.plcoding.goldchart.core.domain.utils.onSuccess
 import com.plcoding.goldchart.exchange.presentation.mappers.toDomain
@@ -91,9 +91,9 @@ class AssetsViewModel(
     private fun generateNewCompany(
         localCurrency: Currency?,
         remoteCurrency: RemoteCurrency,
-    ): CurrencyCompany {
-        return CurrencyCompany(
-            companyName = remoteCurrency.company.companyName,
+    ): Company {
+        return Company(
+            name = remoteCurrency.company.name,
             updatedTime = remoteCurrency.company.updatedTime
         )
     }

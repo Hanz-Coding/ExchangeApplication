@@ -6,9 +6,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.plcoding.goldchart.exchange.presentation.components.item.ItemCurrencyExchange
 import com.plcoding.goldchart.exchange.domain.CompanyName
 import com.plcoding.goldchart.exchange.presentation.ExchangeMenuView
-import com.plcoding.goldchart.exchange.presentation.ExchangeState
+import com.plcoding.goldchart.exchange.presentation.state.ExchangeState
 import com.plcoding.goldchart.exchange.presentation.ExchangeViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -25,7 +26,7 @@ fun BIDVExchangeScreenRoot(
             ExchangeMenuView(currency.company)
             LazyColumn {
                 items(currency.exchangeList) {
-                    ItemCurrency(it)
+                    ItemCurrencyExchange(it)
                 }
             }
         }

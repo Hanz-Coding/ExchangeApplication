@@ -1,11 +1,11 @@
 package com.plcoding.goldchart.gold.presentation.mappers
 
 import androidx.compose.ui.graphics.Color
-import com.plcoding.goldchart.core.domain.model.Currency
-import com.plcoding.goldchart.core.domain.model.CurrencyCompany
-import com.plcoding.goldchart.core.domain.model.CurrencyExchange
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.local.Currency
+import com.plcoding.goldchart.exchange.domain.model.local.Company
+import com.plcoding.goldchart.exchange.domain.model.local.CurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrencyExchange
 import com.plcoding.goldchart.gold.domain.getTitleForSJC
 import com.plcoding.goldchart.gold.presentation.home.model.CurrencyCompanyUI
 import com.plcoding.goldchart.gold.presentation.home.model.CurrencyDisplay
@@ -17,9 +17,9 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-fun CurrencyCompany.toUI(): CurrencyCompanyUI {
+fun Company.toUI(): CurrencyCompanyUI {
     return CurrencyCompanyUI(
-        companyName = companyName,
+        companyName = name,
         updatedTime = updatedTime
     )
 }
@@ -99,8 +99,8 @@ fun RemoteCurrencyExchange.toUI(): CurrencyExchange {
 }
 
 fun RemoteCurrency.toDomain(): Currency {
-    val newCompany = CurrencyCompany(
-        companyName = company.companyName,
+    val newCompany = Company(
+        name = company.name,
         updatedTime = company.updatedTime
     )
     return Currency(

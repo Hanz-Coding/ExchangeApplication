@@ -1,8 +1,8 @@
 package com.plcoding.goldchart.gold.data.mappers
 
-import com.plcoding.goldchart.core.domain.model.CurrencyCompany
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrencyExchange
+import com.plcoding.goldchart.exchange.domain.model.local.Company
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrencyExchange
 import com.plcoding.goldchart.gold.data.dto.pnj.PNJAssetDto
 import com.plcoding.goldchart.gold.data.dto.pnj.PNJAssetResponseDto
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetDto
@@ -30,7 +30,7 @@ fun convertDateStringToDouble(dateString: String): ZonedDateTime? {
 
 fun SJCAssetResponseDto.toCurrency(): RemoteCurrency {
     val updateTime = getTime(this.latestDate,"HH:mm dd/MM/yyyy")
-    val company = CurrencyCompany(CompanyName.SJC, updateTime)
+    val company = Company(CompanyName.SJC, updateTime)
 
     val exchangeList: List<RemoteCurrencyExchange> = this.data.map { dto -> dto.toBase() }
     return RemoteCurrency(company, exchangeList)
@@ -49,7 +49,7 @@ fun SJCAssetDto.toBase(): RemoteCurrencyExchange {
 }
 
 fun PNJAssetResponseDto.toCurrency(): RemoteCurrency {
-    val company = CurrencyCompany(CompanyName.PNJ, this.updatetime)
+    val company = Company(CompanyName.PNJ, this.updatetime)
     val exchangeList: List<RemoteCurrencyExchange> = this.data.map { dto -> dto.toBase() }
     return RemoteCurrency(company, exchangeList)
 }

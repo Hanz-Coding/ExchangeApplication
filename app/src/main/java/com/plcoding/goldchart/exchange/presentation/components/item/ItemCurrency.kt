@@ -1,4 +1,4 @@
-package com.plcoding.goldchart.exchange.presentation.components
+package com.plcoding.goldchart.exchange.presentation.components.item
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,19 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.plcoding.goldchart.exchange.presentation.getCurrencyNameByCode
 import com.plcoding.goldchart.exchange.presentation.model.CurrencyExchangeUI
 
 @Composable
-fun ItemCurrency(
+fun ItemCurrencyExchange(
     exchange: CurrencyExchangeUI,
     modifier: Modifier = Modifier,
 ) {
@@ -58,75 +57,39 @@ fun ItemCurrency(
                 )
             }
             Text(
-                text = exchange.currencyName,
+                text = getCurrencyNameByCode(exchange.currencyCode),
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Light,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
         }
 
-        PriceView(
-            exchange.buy,
-            exchange.previousBuy,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        )
-        PriceView(
-            exchange.transfer,
-            exchange.previousTransfer,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        )
-        PriceView(
-            exchange.sell,
-            exchange.previousSell,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        )
+        if (exchange.buy != 0.0) {
+            ItemCurrencyPrice(
+                exchange.buy,
+                exchange.previousBuy,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            )
+        }
+        if (exchange.transfer != 0.0) {
+            ItemCurrencyPrice(
+                exchange.transfer,
+                exchange.previousTransfer,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            )
+        }
+        if (exchange.sell != 0.0) {
+            ItemCurrencyPrice(
+                exchange.sell,
+                exchange.previousSell,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            )
+        }
     }
 }
-
-@Composable
-fun PriceView(
-    value: Double,
-    previousValue: Double,
-    modifier: Modifier = Modifier,
-) {
-    val change = value - previousValue
-    val changePercent = if (change == 0.0 || previousValue == 0.0) 0.0 else {
-        change * 100 / previousValue
-    }
-
-    val textColor = if (change > 0) {
-        Color.Green
-    } else {
-        Color.Red
-    }
-
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = value.toString(),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = "%.2f".format(change),
-            fontWeight = FontWeight.Medium,
-            style = MaterialTheme.typography.labelSmall,
-            color = textColor
-        )
-        Text(
-            text = "%.2f".format(changePercent) + "%",
-            fontWeight = FontWeight.Medium,
-            style = MaterialTheme.typography.labelSmall,
-            color = textColor
-        )
-    }
-}
-

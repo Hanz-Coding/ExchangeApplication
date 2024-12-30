@@ -7,13 +7,13 @@ import com.plcoding.goldchart.core.domain.utils.map
 import com.plcoding.goldchart.exchange.data.dto.bidv.BIDVCurrencyResponseDto
 import com.plcoding.goldchart.exchange.data.mappers.toCurrency
 import com.plcoding.goldchart.exchange.data.network.api.BIDVCurrencyApi
-import com.plcoding.goldchart.exchange.domain.datasource.BIDVCurrencyDataSource
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.datasource.CurrencyDataSource
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
 
-class RemoteBIDVCurrencyDatasource(val api: BIDVCurrencyApi) : BIDVCurrencyDataSource {
-    override suspend fun fetchBIDVCurrency(): Result<RemoteCurrency, DataError.RemoteError> {
+class RemoteBIDVCurrencyDatasource(val api: BIDVCurrencyApi) : CurrencyDataSource {
+    override suspend fun fetchCurrency(date: String): Result<RemoteCurrency, DataError.RemoteError> {
         return safeCallRetrofit<BIDVCurrencyResponseDto> {
-            api.fetchBIDVCurrency()
+            api.fetchCurrency()
         }.map { responseDto ->
             responseDto.toCurrency()
         }

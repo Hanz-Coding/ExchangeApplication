@@ -31,6 +31,7 @@ import com.plcoding.goldchart.exchange.domain.CompanyName
 import com.plcoding.goldchart.exchange.presentation.components.BIDVExchangeScreenRoot
 import com.plcoding.goldchart.exchange.presentation.components.VCBExchangeScreenRoot
 import com.plcoding.goldchart.exchange.presentation.model.CurrencyCompanyUI
+import com.plcoding.goldchart.exchange.presentation.state.ExchangeState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -1,4 +1,4 @@
-package com.plcoding.goldchart.core.domain.model.remote
+package com.plcoding.goldchart.exchange.domain.model.remote
 
 data class RemoteCurrencyExchange(
     val currencyCode: String,

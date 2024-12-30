@@ -1,4 +1,4 @@
-package com.plcoding.goldchart.core.domain.model
+package com.plcoding.goldchart.exchange.domain.model.local
 
 data class CurrencyExchange(
     val currencyCode: String,

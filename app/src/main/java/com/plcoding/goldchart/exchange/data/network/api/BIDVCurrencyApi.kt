@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface BIDVCurrencyApi {
     @GET("ServicesBIDV/ExchangeDetailServlet")
-    suspend fun fetchBIDVCurrency(): Response<BIDVCurrencyResponseDto>
+    suspend fun fetchCurrency(): Response<BIDVCurrencyResponseDto>
 }

@@ -1,4 +1,4 @@
-package com.plcoding.goldchart.exchange.presentation
+package com.plcoding.goldchart.exchange.presentation.state
 
 import com.plcoding.goldchart.exchange.presentation.model.CurrencyUI
 

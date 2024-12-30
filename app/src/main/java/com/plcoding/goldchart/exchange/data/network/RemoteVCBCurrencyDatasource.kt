@@ -7,13 +7,13 @@ import com.plcoding.goldchart.core.domain.utils.map
 import com.plcoding.goldchart.exchange.data.dto.vcb.VCBCurrencyResponseDto
 import com.plcoding.goldchart.exchange.data.mappers.toCurrency
 import com.plcoding.goldchart.exchange.data.network.api.VCBCurrencyApi
-import com.plcoding.goldchart.exchange.domain.datasource.VCBCurrencyDataSource
-import com.plcoding.goldchart.core.domain.model.remote.RemoteCurrency
+import com.plcoding.goldchart.exchange.domain.datasource.CurrencyDataSource
+import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
 
-class RemoteVCBCurrencyDatasource(val api: VCBCurrencyApi) : VCBCurrencyDataSource {
-    override suspend fun fetchVCBCurrency(date: String): Result<RemoteCurrency, DataError.RemoteError> {
+class RemoteVCBCurrencyDatasource(val api: VCBCurrencyApi) : CurrencyDataSource {
+    override suspend fun fetchCurrency(date: String): Result<RemoteCurrency, DataError.RemoteError> {
         return safeCallRetrofit<VCBCurrencyResponseDto> {
-            api.fetchVCBCurrency(date)
+            api.fetchCurrency(date)
         }.map { responseDto ->
             responseDto.toCurrency()
         }
