@@ -1,0 +1,120 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "a5d1922c907d3315544b877a936fc1c6",
+    "entities": [
+      {
+        "tableName": "CurrencyExchangeEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`code_name` TEXT NOT NULL, `currency_code` TEXT NOT NULL, `currency_name` TEXT NOT NULL, `company_name` TEXT NOT NULL, `icon_url` TEXT NOT NULL, `buy` REAL NOT NULL, `transfer` REAL NOT NULL, `sell` REAL NOT NULL, `previous_buy` REAL NOT NULL, `previous_transfer` REAL NOT NULL, `previous_sell` REAL NOT NULL, PRIMARY KEY(`code_name`))",
+        "fields": [
+          {
+            "fieldPath": "currencyCodeName",
+            "columnName": "code_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currency_code",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyName",
+            "columnName": "currency_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "companyName",
+            "columnName": "company_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconUrl",
+            "columnName": "icon_url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "buy",
+            "columnName": "buy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "transfer",
+            "columnName": "transfer",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sell",
+            "columnName": "sell",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "previousBuy",
+            "columnName": "previous_buy",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "previousTransfer",
+            "columnName": "previous_transfer",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "previousSell",
+            "columnName": "previous_sell",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "code_name"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "CurrencyCompanyEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`company_name` TEXT NOT NULL, `updated_time` INTEGER NOT NULL, PRIMARY KEY(`company_name`))",
+        "fields": [
+          {
+            "fieldPath": "companyName",
+            "columnName": "company_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedTime",
+            "columnName": "updated_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "company_name"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5d1922c907d3315544b877a936fc1c6')"
+    ]
+  }
+}
