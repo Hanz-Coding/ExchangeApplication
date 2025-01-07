@@ -10,6 +10,7 @@ data class CurrencyExchangeEntity(
     @ColumnInfo(name = "code_name") val currencyCodeName: String,
     @ColumnInfo(name = "currency_code") val currencyCode: String,
     @ColumnInfo(name = "currency_name") val currencyName: String,
+    @ColumnInfo(name = "currency_type") val currencyType: String,
     @ColumnInfo(name = "company_name") val companyName: String,
     @ColumnInfo(name = "icon_url") val iconUrl: String,
     @ColumnInfo(name = "buy") val buy: Double,

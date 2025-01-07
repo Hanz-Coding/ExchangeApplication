@@ -130,6 +130,7 @@ class ExchangeViewModel(private val repository: CurrencyRepository) : ViewModel(
             CurrencyExchange(
                 currencyCode = exchange.currencyCode,
                 currencyName = exchange.currencyName,
+                currencyType = exchange.currencyType,
                 companyName = exchange.companyName,
                 iconUrl = exchange.iconUrl,
                 buy = remote.buy,

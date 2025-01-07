@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.plcoding.cryptotracker.R
+import com.plcoding.goldchart.R
 
 val SpaceMono = FontFamily(
     Font(

@@ -21,10 +21,11 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-fun VCBDataDto.toBase(): RemoteCurrencyExchange {
+fun VCBDataDto.toDomain(): RemoteCurrencyExchange {
     return RemoteCurrencyExchange(
         currencyCode = currencyCode,
         currencyName = currencyName,
+        currencyType = currencyCode,
         companyName = CompanyName.VCB,
         iconUrl = updateIconUrl(CompanyName.VCB, icon),
         buy = cash.toDouble(),
@@ -41,7 +42,7 @@ fun updateIconUrl(companyName: String, iconUrl: String): String {
     }
 }
 
-fun VCBCurrencyResponseDto.toCurrency(): RemoteCurrency {
+fun VCBCurrencyResponseDto.toDomain(): RemoteCurrency {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
     val updatedDate = dateFormat.parse(this.UpdatedDate)
     val updateTime = updatedDate?.time ?: 0L
@@ -49,11 +50,11 @@ fun VCBCurrencyResponseDto.toCurrency(): RemoteCurrency {
 
     return RemoteCurrency(company,
         this.Data.map { dto ->
-            dto.toBase()
+            dto.toDomain()
         })
 }
 
-fun BIDVCurrencyResponseDto.toCurrency(): RemoteCurrency {
+fun BIDVCurrencyResponseDto.toDomain(): RemoteCurrency {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     val remoteDate = this.day_vi + " " + this.hour
     val updatedDate = dateFormat.parse(remoteDate)
@@ -62,14 +63,15 @@ fun BIDVCurrencyResponseDto.toCurrency(): RemoteCurrency {
 
     return RemoteCurrency(company,
         this.data.map { dto ->
-            dto.toBase()
+            dto.toDomain()
         })
 }
 
-fun BIDVDataDto.toBase(): RemoteCurrencyExchange {
+fun BIDVDataDto.toDomain(): RemoteCurrencyExchange {
     return RemoteCurrencyExchange(
         currencyCode = currency,
         currencyName = nameVI,
+        currencyType = currency,
         companyName = CompanyName.BIDV,
         iconUrl = updateIconUrl(CompanyName.BIDV, image),
         buy = convertStringToDouble(muaTm),
@@ -101,6 +103,7 @@ fun CurrencyExchange.toEntity(): CurrencyExchangeEntity {
         currencyCodeName = currencyCode + companyName,
         currencyCode = currencyCode,
         currencyName = currencyName,
+        currencyType = currencyType,
         companyName = companyName,
         iconUrl = iconUrl,
         buy = buy,
@@ -116,6 +119,7 @@ fun CurrencyExchangeEntity.toDomain(): CurrencyExchange {
     return CurrencyExchange(
         currencyCode = currencyCode,
         currencyName = currencyName,
+        currencyType =currencyType,
         companyName = companyName,
         iconUrl = iconUrl,
         buy = buy,

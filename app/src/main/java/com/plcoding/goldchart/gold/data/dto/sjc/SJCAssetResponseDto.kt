@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SJCAssetResponseDto(
     val `data`: List<SJCAssetDto>,
-    val latestDate: String,
+    val latestDate: String?,
+    val currentDate: String?,
     val success: Boolean,
 )

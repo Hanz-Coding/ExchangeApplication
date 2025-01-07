@@ -43,6 +43,7 @@ fun RemoteCurrencyExchange.toUI(): CurrencyExchange {
     return CurrencyExchange(
         currencyCode = currencyCode,
         currencyName = currencyName,
+        currencyType = currencyType,
         companyName = companyName,
         iconUrl = iconUrl,
         buy = buy,

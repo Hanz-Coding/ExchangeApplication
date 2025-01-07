@@ -4,15 +4,16 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.room)
+    alias(libs.plugins.firebase)
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.plcoding.cryptotracker"
+    namespace = "com.plcoding.goldchart"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.plcoding.cryptotracker"
+        applicationId = "com.plcoding.goldchart"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -78,6 +79,7 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.coil)
+    implementation(platform(libs.firebase.bom))
 
     implementation(libs.bundles.ktor)
 

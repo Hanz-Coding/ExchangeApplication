@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a5d1922c907d3315544b877a936fc1c6",
+    "identityHash": "e031e5ec26b54966f417faf858c39617",
     "entities": [
       {
         "tableName": "CurrencyExchangeEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`code_name` TEXT NOT NULL, `currency_code` TEXT NOT NULL, `currency_name` TEXT NOT NULL, `company_name` TEXT NOT NULL, `icon_url` TEXT NOT NULL, `buy` REAL NOT NULL, `transfer` REAL NOT NULL, `sell` REAL NOT NULL, `previous_buy` REAL NOT NULL, `previous_transfer` REAL NOT NULL, `previous_sell` REAL NOT NULL, PRIMARY KEY(`code_name`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`code_name` TEXT NOT NULL, `currency_code` TEXT NOT NULL, `currency_name` TEXT NOT NULL, `currency_type` TEXT NOT NULL, `company_name` TEXT NOT NULL, `icon_url` TEXT NOT NULL, `buy` REAL NOT NULL, `transfer` REAL NOT NULL, `sell` REAL NOT NULL, `previous_buy` REAL NOT NULL, `previous_transfer` REAL NOT NULL, `previous_sell` REAL NOT NULL, PRIMARY KEY(`code_name`))",
         "fields": [
           {
             "fieldPath": "currencyCodeName",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "currencyName",
             "columnName": "currency_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyType",
+            "columnName": "currency_type",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -114,7 +120,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5d1922c907d3315544b877a936fc1c6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e031e5ec26b54966f417faf858c39617')"
     ]
   }
 }

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.plcoding.goldchart.core.data.database.AssetDatabase
 import com.plcoding.goldchart.core.data.networking.HttpClientFactory
-import com.plcoding.goldchart.gold.presentation.home.AssetsViewModel
+import com.plcoding.goldchart.home.presentation.AssetsViewModel
 import io.ktor.client.engine.cio.CIO
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.bind

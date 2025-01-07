@@ -18,4 +18,5 @@ interface CurrencyDAO {
 
     @Query("SELECT * FROM CurrencyCompanyEntity WHERE company_name = :companyName")
     suspend fun getCompanyByName(companyName: String): CurrencyCompanyEntity?
+
 }

@@ -3,6 +3,7 @@ package com.plcoding.goldchart.exchange.domain.model.local
 data class CurrencyExchange(
     val currencyCode: String,
     val currencyName: String,
+    val currencyType: String,
     val companyName: String,
     val iconUrl: String,
     val buy: Double,

@@ -6,18 +6,23 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -31,14 +36,12 @@ import androidx.navigation.toRoute
 import com.plcoding.goldchart.app.Routes
 import com.plcoding.goldchart.exchange.presentation.ExchangeScreenRoot
 import com.plcoding.goldchart.forum.presentation.ForumScreenRoot
-import com.plcoding.goldchart.gold.presentation.gold_price.GoldPriceScreenRoot
-import com.plcoding.goldchart.gold.presentation.home.AssetsViewModel
-import com.plcoding.goldchart.gold.presentation.home.HomeScreenRoot
-import com.plcoding.goldchart.gold.presentation.home.components.AssetScreen
+import com.plcoding.goldchart.gold.presentation.GoldPriceScreenRoot
+import com.plcoding.goldchart.home.presentation.HomeScreenRoot
+import com.plcoding.goldchart.home.presentation.components.AssetScreen
 import com.plcoding.goldchart.setting.presentation.SettingScreenRoot
 import com.plcoding.goldchart.ui.components.BottomNavUtil
-import com.plcoding.goldchart.ui.theme.CryptoTrackerTheme
-import org.koin.androidx.compose.koinViewModel
+import com.plcoding.goldchart.ui.theme.GoldChartTheme
 
 class MainActivity : ComponentActivity(), AnalyticLogger by AnalyticLoggerImpl() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -48,7 +51,7 @@ class MainActivity : ComponentActivity(), AnalyticLogger by AnalyticLoggerImpl()
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            CryptoTrackerTheme {
+            GoldChartTheme {
                 Scaffold(modifier = Modifier
                     .fillMaxSize()
                     .statusBarsPadding(),
@@ -66,7 +69,6 @@ class MainActivity : ComponentActivity(), AnalyticLogger by AnalyticLoggerImpl()
 @Composable
 fun NavigationBarCustom(
     navController: NavController,
-    modifier: Modifier = Modifier,
 ) {
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
@@ -90,18 +92,21 @@ fun NavigationBarCustom(
                     }
                 },
                 icon = {
-                    BadgedBox(
-                        badge = {
-
-                        }
-                    ) {
-                        Icon(
-                            imageVector = if (index == selectedItemIndex) {
-                                item.selectedIcon
-                            } else item.unSelectedIcon,
-                            contentDescription = item.title
-                        )
-                    }
+                    Icon(
+                        imageVector = if (index == selectedItemIndex) {
+                            item.selectedIcon
+                        } else item.unSelectedIcon,
+                        contentDescription = item.title,
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp,
+                        fontFamily = FontFamily.Default,
+                        modifier = Modifier.padding(vertical = 0.dp)
+                    )
                 }
             )
         }
@@ -119,10 +124,7 @@ fun MainContent(navController: NavHostController) {
             startDestination = Routes.HomeScreen
         ) {
             composable<Routes.HomeScreen> {
-                val viewModel = koinViewModel<AssetsViewModel>()
-                HomeScreenRoot(
-                    viewModel = viewModel,
-                )
+                HomeScreenRoot()
             }
 
             composable<Routes.AssetDetail> { entry ->
@@ -131,8 +133,6 @@ fun MainContent(navController: NavHostController) {
             }
 
             composable<Routes.GoldPriceScreen> {
-//                val viewModel = koinViewModel<GoldPriceViewModel>()
-//                GoldPriceScreenRoot(viewModel)
                 GoldPriceScreenRoot()
             }
 

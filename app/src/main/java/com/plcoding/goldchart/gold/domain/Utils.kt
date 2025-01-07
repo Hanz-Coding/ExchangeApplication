@@ -7,14 +7,14 @@ object CompanyName {
 }
 
 object AssetType {
-    const val SJC = 1
-    const val SJC_RING = 49
+    const val SJC = "SJC1"
+    const val SJC_RING = "SJC49"
 }
 
-fun getTitleForSJC(id: Int): String {
+fun getTitleForSJC(id: String): String {
     return when (id) {
-        1 -> "Vàng miếng SJC"
-        49 -> "Vàng nhẫn 9999 (99,99%)"
+        "SJC1" -> "Vàng miếng SJC"
+        "SJC49" -> "Vàng nhẫn 9999 (99,99%)"
         else -> "Vàng"
     }
 }

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Gold App</string>
     <string name="bottom_home">Trang chủ</string>
+    <string name="menu_type">Loại</string>
+    <string name="menu_buy">Mua vào</string>
+    <string name="menu_sell">Bán ra</string>
+    <string name="category_gold">Giá Vàng</string>
 </resources>
