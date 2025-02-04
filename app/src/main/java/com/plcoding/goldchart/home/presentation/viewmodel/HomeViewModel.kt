@@ -3,7 +3,7 @@ package com.plcoding.goldchart.home.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.goldchart.core.domain.utils.onSuccess
-import com.plcoding.goldchart.data.mappers.generateCurrencyCode
+import com.plcoding.goldchart.data.mappers.generateCurrencyId
 import com.plcoding.goldchart.domain.Repository
 import com.plcoding.goldchart.domain.model.Company
 import com.plcoding.goldchart.domain.model.Currency
@@ -176,7 +176,8 @@ class HomeViewModel(
         val size = list.size
         val exchangeList = list.reversed()
         return Exchange(
-            currencyCode = generateCurrencyCode(CompanyName.SJC, code.toString()),
+            currencyId = generateCurrencyId(CompanyName.SJC, code.toString()),
+            currencyCode = code.toString(),
             currencyName = exchangeList[0].currencyName,
             companyName = exchangeList[0].companyName,
             currencyType = exchangeList[0].currencyType,

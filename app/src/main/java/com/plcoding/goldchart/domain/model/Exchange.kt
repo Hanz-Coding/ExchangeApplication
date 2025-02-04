@@ -1,6 +1,7 @@
 package com.plcoding.goldchart.domain.model
 
 data class Exchange(
+    val currencyId: String,
     val currencyCode: String,
     val currencyName: String,
     val currencyType: String,

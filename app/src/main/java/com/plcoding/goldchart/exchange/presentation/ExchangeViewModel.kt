@@ -13,10 +13,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ExchangeViewModel(private val repository: Repository) : ViewModel() {
-    private val _state = MutableStateFlow(ExchangeState())
-    val state = _state.onStart {
+    private val _stateVCB = MutableStateFlow(ExchangeState())
+    val stateVCB = _stateVCB.onStart {
         loadLocalCurrency(CompanyName.VCB)
         fetchAndSaveCurrencyDB(CompanyName.VCB)
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(5000), ExchangeState()
+    )
+
+    private val _stateBIDV = MutableStateFlow(ExchangeState())
+    val stateBIDV = _stateBIDV.onStart {
+        loadLocalCurrency(CompanyName.BIDV)
+        fetchAndSaveCurrencyDB(CompanyName.BIDV)
     }.stateIn(
         viewModelScope, SharingStarted.WhileSubscribed(5000), ExchangeState()
     )
@@ -27,7 +35,7 @@ class ExchangeViewModel(private val repository: Repository) : ViewModel() {
     }
 
     fun onPullToRefreshTrigger(companyName: String) {
-        _state.update {
+        _stateVCB.update {
             it.copy(isLoading = true).also {
                 println("PullToRefreshBox _state.update 1 ${it.isLoading}")
             }
@@ -40,7 +48,7 @@ class ExchangeViewModel(private val repository: Repository) : ViewModel() {
         println("hanz start loadLocalCurrency")
         viewModelScope.launch {
             repository.getCurrencyByCompany(companyName).collect { currency ->
-                _state.update {
+                _stateVCB.update {
                     val updatedCurrency = it.currencyMap.toMutableMap()
                     updatedCurrency[companyName] = currency
                     it.copy(currencyMap = updatedCurrency)

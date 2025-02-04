@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class ExchangeEntity(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "code_name") val currencyCodeName: String,
+    @ColumnInfo(name = "currency_id") val currencyId: String,
     @ColumnInfo(name = "currency_code") val currencyCode: String,
     @ColumnInfo(name = "currency_name") val currencyName: String,
     @ColumnInfo(name = "currency_type") val currencyType: String,

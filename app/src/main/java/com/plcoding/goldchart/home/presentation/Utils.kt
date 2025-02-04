@@ -11,11 +11,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
-fun Double.toDisplayNumber(): String = DecimalFormat("#,###").format(this)
-
-@SuppressLint("DefaultLocale")
-fun Double.toDisplayPercent(): String = String.format("%.2f", this)
-
 fun formatLongToDate(longTime: Long): String {
     // Chuyển Long (miliseconds) thành LocalDateTime
     val instant = Instant.ofEpochMilli(longTime)

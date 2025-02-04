@@ -1,6 +1,6 @@
 package com.plcoding.goldchart.gold.data.mappers
 
-import com.plcoding.goldchart.data.mappers.generateCurrencyCode
+import com.plcoding.goldchart.data.mappers.generateCurrencyId
 import com.plcoding.goldchart.domain.model.Company
 import com.plcoding.goldchart.domain.model.Currency
 import com.plcoding.goldchart.domain.model.Exchange
@@ -35,10 +35,11 @@ fun SJCGoldHistoryResponseDto.toDomain(): Currency {
 }
 
 fun SJCAssetDto.toDomain(): Exchange {
-    val currencyCode = generateCurrencyCode(CompanyName.SJC, id.toString())
+    val currencyId = generateCurrencyId(CompanyName.SJC, id.toString())
     return Exchange(
-        currencyCode = currencyCode,
-        currencyName = validateSJCName(currencyCode),
+        currencyId = currencyId,
+        currencyCode = id.toString(),
+        currencyName = validateSJCName(currencyId),
         currencyType = branchName,
         companyName = CompanyName.SJC,
         iconUrl = "",

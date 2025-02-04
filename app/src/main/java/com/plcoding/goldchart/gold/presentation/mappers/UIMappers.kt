@@ -40,13 +40,13 @@ fun Exchange.toDisplay(): ExchangeUI {
     val backgroundColor = colorBackground(buyChange)
     return ExchangeUI(
         currencyName = this.currencyName,
-        buy = this.buy.toDisplayNumber().formatedValue,
-        buyChange = buyChange.toDisplayNumber().formatedValue,
-        buyChangePercent = "${buyChangePercent.toDisplayNumber().formatedValue}%",
+        buy = this.buy.toDisplayNumber(),
+        buyChange = buyChange.toDisplayNumber(),
+        buyChangePercent = "${buyChangePercent.toDisplayNumber()}%",
         buyColor = buyColor,
-        sell = this.sell.toDisplayNumber().formatedValue,
-        sellChange = sellChange.toDisplayNumber().formatedValue,
-        sellChangePercent = "${sellChangePercent.toDisplayNumber().formatedValue}%",
+        sell = this.sell.toDisplayNumber(),
+        sellChange = sellChange.toDisplayNumber(),
+        sellChangePercent = "${sellChangePercent.toDisplayNumber()}%",
         sellColor = sellColor,
         backgroundColor = backgroundColor
     )

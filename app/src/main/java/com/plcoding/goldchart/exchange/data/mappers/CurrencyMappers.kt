@@ -1,6 +1,6 @@
 package com.plcoding.goldchart.exchange.data.mappers
 
-import com.plcoding.goldchart.data.mappers.generateCurrencyCode
+import com.plcoding.goldchart.data.mappers.generateCurrencyId
 import com.plcoding.goldchart.domain.model.Company
 import com.plcoding.goldchart.domain.model.Currency
 import com.plcoding.goldchart.domain.model.Exchange
@@ -15,7 +15,8 @@ import java.util.Locale
 
 fun VCBDataDto.toDomain(): Exchange {
     return Exchange(
-        currencyCode = generateCurrencyCode(CompanyName.VCB, currencyCode ?: ""),
+        currencyId = generateCurrencyId(CompanyName.VCB, currencyCode ?: ""),
+        currencyCode = currencyCode ?: "",
         currencyName = currencyName ?: "",
         currencyType = currencyCode ?: "",
         companyName = CompanyName.VCB,
@@ -59,6 +60,7 @@ fun BIDVCurrencyResponseDto.toDomain(): Currency {
 
 fun BIDVDataDto.toDomain(): Exchange {
     return Exchange(
+        currencyId = generateCurrencyId(CompanyName.BIDV, currencyCode ?: ""),
         currencyCode = currencyCode ?: "",
         currencyName = nameVI ?: "",
         currencyType = currencyCode ?: "",

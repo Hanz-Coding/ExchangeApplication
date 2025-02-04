@@ -11,4 +11,8 @@
     <string name="sell_sjc_des">Giá cửa hàng thu vào mỗi lượng (đ)</string>
     <string name="transfer_usd_vcb_title">Chuyển khoản</string>
     <string name="transfer_usd_vcs_des">Giá ngân hàng mua vào thông qua chuyển khoản mỗi ngoại tệ(đ)</string>
+    <string name="menu_exchange_type">Ngoại tệ</string>
+    <string name="menu_exchange_buy">Mua</string>
+    <string name="menu_exchange_ck">CK</string>
+    <string name="menu_exchange_sell">Bán</string>
 </resources>

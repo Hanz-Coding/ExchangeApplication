@@ -10,7 +10,7 @@ fun getCurrencyNameByCode(code: String): String {
         "SGD" -> "DOLLAR Singapore"
         "CNY" -> "Nhân Dan Tệ (TQ)"
         "RUB" -> "RUB Nga"
-        "BAHT" -> "BAHT Thái Lan"
+        "THB" -> "BAHT Thái Lan"
         "AUD" -> "AUSTRALIAN Dollar"
         "CAD" -> "DOLLAR Canada"
         "CHF" -> "FRANC Thuỵ Sỹ"

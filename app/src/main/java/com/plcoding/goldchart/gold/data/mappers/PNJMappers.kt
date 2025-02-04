@@ -17,7 +17,8 @@ fun PNJAssetResponseDto.toDomain(): Currency {
 
 fun PNJAssetDto.toDomain(): Exchange {
     return Exchange(
-        currencyCode = CompanyName.PNJ + code,
+        currencyId = CompanyName.PNJ + code,
+        currencyCode = code,
         currencyName = validatePNJName(code),
         currencyType = validatePNJBrandType(code),
         companyName = CompanyName.PNJ,

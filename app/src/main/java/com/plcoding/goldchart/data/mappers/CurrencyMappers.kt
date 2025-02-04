@@ -9,7 +9,7 @@ import com.plcoding.goldchart.domain.model.Exchange
 
 fun Exchange.toEntity(): ExchangeEntity {
     return ExchangeEntity(
-        currencyCodeName = generateCurrencyCode(companyName, currencyCode),
+        currencyId = generateCurrencyId(companyName, currencyCode),
         currencyCode = currencyCode,
         currencyName = currencyName,
         currencyType = currencyType,
@@ -24,12 +24,13 @@ fun Exchange.toEntity(): ExchangeEntity {
     )
 }
 
-fun generateCurrencyCode(company: String, code: String): String {
+fun generateCurrencyId(company: String, code: String): String {
     return company + "_" + code
 }
 
 fun ExchangeEntity.toDomain(): Exchange {
     return Exchange(
+        currencyId = currencyId,
         currencyCode = currencyCode,
         currencyName = currencyName,
         currencyType = currencyType,

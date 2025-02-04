@@ -97,6 +97,7 @@ abstract class RepositoryImpl(
 
     private fun generateExchange(current: Exchange, previous: Exchange): Exchange {
         return Exchange(
+            currencyId = current.currencyId,
             currencyCode = current.currencyCode,
             currencyName = current.currencyName,
             companyName = current.companyName,

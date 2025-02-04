@@ -10,8 +10,8 @@ import com.plcoding.goldchart.home.presentation.formatLongToDate
 import com.plcoding.goldchart.home.presentation.model.CurrencyUI
 import com.plcoding.goldchart.home.presentation.model.NewsUI
 import com.plcoding.goldchart.home.presentation.model.PriceUI
-import com.plcoding.goldchart.home.presentation.toDisplayNumber
-import com.plcoding.goldchart.home.presentation.toDisplayPercent
+import com.plcoding.goldchart.presentation.utils.toDisplayNumber
+import com.plcoding.goldchart.presentation.utils.toDisplayPercent
 
 val colorText: (Double) -> Color = {
     if (it >= 0) Color(0xff08A045) else Color.Red
@@ -30,7 +30,7 @@ val percent: (Double, Double) -> Double = { change, previous ->
 fun Currency.toUI(code: String): CurrencyUI? {
     val updatedTime = company.updatedTime
     val exchangeUI = exchangeList.find {
-        it.currencyCode == code
+        it.currencyId == code
     }
     if (exchangeUI == null) return null
     val title = getTitleCurrency(code)
