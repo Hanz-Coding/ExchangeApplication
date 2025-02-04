@@ -2,6 +2,7 @@ package com.plcoding.goldchart.gold.data.repository
 
 import com.plcoding.goldchart.core.domain.utils.DataError
 import com.plcoding.goldchart.core.domain.utils.Result
+import com.plcoding.goldchart.core.domain.utils.onSuccess
 import com.plcoding.goldchart.data.database.currency.CurrencyDAO
 import com.plcoding.goldchart.data.repository.RepositoryImpl
 import com.plcoding.goldchart.domain.datasource.CurrencyDataSource
@@ -45,5 +46,11 @@ class GoldRepositoryImpl(
     ): Result<Currency, DataError.RemoteError> {
         val dataSource = getDataSource(companyName)
         return dataSource.fetCurrencyHistory(code)
+    }
+
+    override suspend fun fetchAndSaveCurrency(companyName: String) {
+        fetchCurrency(companyName).onSuccess {
+            saveCurrencyToDB(it)
+        }
     }
 }

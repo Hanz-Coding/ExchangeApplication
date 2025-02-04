@@ -1,9 +1,10 @@
-package com.plcoding.goldchart.gold.presentation
+package com.plcoding.goldchart.gold.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.goldchart.domain.Repository
 import com.plcoding.goldchart.gold.domain.CompanyName
+import com.plcoding.goldchart.gold.presentation.CategoryState
 import com.plcoding.goldchart.gold.presentation.mappers.toUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +18,7 @@ class GoldPriceViewModel(
 ) : ViewModel() {
 
     private val _stateSJC = MutableStateFlow(CategoryState())
-    val stateSJC = _stateSJC.onStart {
+    private val stateSJC = _stateSJC.onStart {
         loadLocalAssets(CompanyName.SJC)
         fetchAndSaveCurrencyDB(CompanyName.SJC)
     }.stateIn(
@@ -27,7 +28,7 @@ class GoldPriceViewModel(
     )
 
     private val _statePNJ = MutableStateFlow(CategoryState())
-    val statePNJ = _statePNJ.onStart {
+    private val statePNJ = _statePNJ.onStart {
         loadLocalAssets(CompanyName.PNJ)
         fetchAndSaveCurrencyDB(CompanyName.PNJ)
     }.stateIn(
@@ -36,21 +37,28 @@ class GoldPriceViewModel(
         CategoryState()
     )
 
-    private fun getTabState(companyName: String) = when (companyName) {
+    fun getTabState(companyName: String) = when (companyName) {
+        CompanyName.SJC -> stateSJC
+        CompanyName.PNJ -> statePNJ
+        else -> throw IllegalArgumentException("Invalid company name $companyName")
+    }
+
+    private fun getTabMutableState(companyName: String) = when (companyName) {
         CompanyName.SJC -> _stateSJC
         CompanyName.PNJ -> _statePNJ
         else -> throw IllegalArgumentException("Invalid company name")
     }
 
-
     private fun loadLocalAssets(companyName: String) {
-        val state = getTabState(companyName)
+        val state = getTabMutableState(companyName)
         viewModelScope.launch {
             state.update {
                 it.copy(isLoading = true)
             }
             repository.getCurrencyByCompany(companyName).collect { currency ->
-                val exchangeList = currency.exchangeList.groupBy { it.currencyType }
+                val exchangeList = currency.exchangeList.filter {
+                    it.buy != 0.0 && it.sell != 0.0
+                }.groupBy { it.currencyType }
                 val result: MutableList<Any> = mutableListOf()
                 exchangeList.forEach {
                     result.add(it.key)

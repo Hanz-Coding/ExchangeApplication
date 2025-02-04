@@ -2,10 +2,8 @@ package com.plcoding.goldchart.gold.presentation.mappers
 
 import androidx.compose.ui.graphics.Color
 import com.plcoding.goldchart.domain.model.Company
-import com.plcoding.goldchart.domain.model.Currency
 import com.plcoding.goldchart.domain.model.Exchange
 import com.plcoding.goldchart.gold.presentation.model.CompanyUI
-import com.plcoding.goldchart.gold.presentation.model.CurrencyUI
 import com.plcoding.goldchart.gold.presentation.model.ExchangeUI
 import com.plcoding.goldchart.presentation.utils.toDisplayNumber
 
@@ -27,13 +25,6 @@ fun Company.toUI(): CompanyUI {
     return CompanyUI(
         companyName = this.name,
         updatedTime = this.updatedTime
-    )
-}
-
-fun Currency.toUI(): CurrencyUI {
-    return CurrencyUI(
-        company = this.company.toUI(),
-        exchangeList = this.exchangeList.map { it.toDisplay() }
     )
 }
 

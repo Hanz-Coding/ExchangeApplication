@@ -66,20 +66,20 @@ fun ItemPrice(
                 fontFamily = FontFamily.Default,
                 letterSpacing = 0.5.sp
             )
-            Text(
-                text = exchangeUI.buyChange,
-                fontFamily = FontFamily.Default,
-                fontSize = 12.sp,
-                color = exchangeUI.buyColor,
-                letterSpacing = 0.5.sp
-            )
-            Text(
-                text = exchangeUI.buyChangePercent,
-                fontFamily = FontFamily.Default,
-                fontSize = 12.sp,
-                color = exchangeUI.buyColor,
-                letterSpacing = 0.5.sp
-            )
+//            Text(
+//                text = exchangeUI.buyChange,
+//                fontFamily = FontFamily.Default,
+//                fontSize = 12.sp,
+//                color = exchangeUI.buyColor,
+//                letterSpacing = 0.5.sp
+//            )
+//            Text(
+//                text = exchangeUI.buyChangePercent,
+//                fontFamily = FontFamily.Default,
+//                fontSize = 12.sp,
+//                color = exchangeUI.buyColor,
+//                letterSpacing = 0.5.sp
+//            )
         }
 
         Column(
@@ -94,18 +94,18 @@ fun ItemPrice(
                 fontFamily = FontFamily.Default
             )
 
-            Text(
-                text = exchangeUI.sellChange,
-                fontFamily = FontFamily.Default,
-                fontSize = 12.sp,
-                color = exchangeUI.sellColor
-            )
-            Text(
-                text = exchangeUI.sellChangePercent,
-                fontFamily = FontFamily.Default,
-                fontSize = 12.sp,
-                color = exchangeUI.sellColor
-            )
+//            Text(
+//                text = exchangeUI.sellChange,
+//                fontFamily = FontFamily.Default,
+//                fontSize = 12.sp,
+//                color = exchangeUI.sellColor
+//            )
+//            Text(
+//                text = exchangeUI.sellChangePercent,
+//                fontFamily = FontFamily.Default,
+//                fontSize = 12.sp,
+//                color = exchangeUI.sellColor
+//            )
         }
     }
 }

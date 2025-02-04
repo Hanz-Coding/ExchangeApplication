@@ -1,5 +1,6 @@
 package com.plcoding.goldchart.gold.data.mappers
 
+import com.plcoding.goldchart.data.mappers.generateCurrencyCode
 import com.plcoding.goldchart.domain.model.Company
 import com.plcoding.goldchart.domain.model.Currency
 import com.plcoding.goldchart.domain.model.Exchange
@@ -8,7 +9,9 @@ import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetResponseDto
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCGoldHistoryResponseDto
 import com.plcoding.goldchart.gold.data.utils.validateSJCName
 import com.plcoding.goldchart.gold.domain.CompanyName
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.Locale
 
 fun SJCAssetResponseDto.toDomain(): Currency {
 
@@ -32,9 +35,10 @@ fun SJCGoldHistoryResponseDto.toDomain(): Currency {
 }
 
 fun SJCAssetDto.toDomain(): Exchange {
+    val currencyCode = generateCurrencyCode(CompanyName.SJC, id.toString())
     return Exchange(
-        currencyCode = CompanyName.SJC + id.toString(),
-        currencyName = validateSJCName(CompanyName.SJC + id.toString()),
+        currencyCode = currencyCode,
+        currencyName = validateSJCName(currencyCode),
         currencyType = branchName,
         companyName = CompanyName.SJC,
         iconUrl = "",
@@ -45,4 +49,10 @@ fun SJCAssetDto.toDomain(): Exchange {
         previousSell = 0.0,
         previousBuy = 0.0
     )
+}
+
+private fun getTime(time: String, format: String): Long {
+    val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+    val date = dateFormat.parse(time)
+    return date?.time ?: 0L
 }

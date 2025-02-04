@@ -8,7 +8,7 @@ import com.plcoding.goldchart.gold.data.network.api.PNJAssetApi
 import com.plcoding.goldchart.gold.data.network.api.SJCAssetApi
 import com.plcoding.goldchart.gold.data.repository.GoldRepositoryImpl
 import com.plcoding.goldchart.gold.data.utils.Constant
-import com.plcoding.goldchart.gold.presentation.GoldPriceViewModel
+import com.plcoding.goldchart.gold.presentation.viewmodel.GoldPriceViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named

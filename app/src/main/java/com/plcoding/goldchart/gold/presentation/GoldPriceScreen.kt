@@ -20,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.plcoding.goldchart.gold.presentation.tab_view.SJCPriceViewRoot
+import com.plcoding.goldchart.gold.presentation.viewmodel.GoldPriceViewModel
+import kotlinx.coroutines.flow.StateFlow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun GoldPriceScreenRoot(
@@ -31,9 +34,11 @@ fun GoldPriceScreenRoot(
 fun GoldPriceScreen(
 ) {
     Column(
-        modifier = Modifier.padding(bottom = 80.dp)
+        modifier = Modifier.padding(bottom = 90.dp)
     ) {
-        val tabItems = listOf("SJC", "PNJ", "DOJI", "Bảo Tín Minh Châu", "Mi Hồng", "Vàng Thế Giới")
+        val viewModel = koinViewModel<GoldPriceViewModel>()
+//        val tabItems = listOf("SJC", "PNJ", "DOJI", "Bảo Tín Minh Châu", "Mi Hồng", "Vàng Thế Giới")
+        val tabItems = listOf("SJC", "PNJ")
         var selectedTabIndex by remember { mutableIntStateOf(0) }
         val pagerState = rememberPagerState {
             tabItems.size
@@ -66,27 +71,22 @@ fun GoldPriceScreen(
             HorizontalPager(
                 state = pagerState, modifier = Modifier.fillMaxWidth()
             ) { index ->
-                tabContents(index)
+                tabContents(index, viewModel.getTabState(tabItems[index]).also {
+                    println("hanz tabItems[index] ${tabItems[index]}")
+                })
             }
         }
     }
 }
 
-val tabContents: @Composable (Int) -> Unit = { index ->
+val tabContents: @Composable (Int, StateFlow<CategoryState>) -> Unit = { index, categoryState ->
     when (index) {
         0 -> {
-            SJCPriceViewRoot()
+            SJCPriceViewRoot(categoryState)
         }
 
         1 -> {
-            // Tab 2: Hiển thị Image
-//            PNJPriceViewRoot()
-        }
-
-        2 -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = index.toString())
-            }
+            SJCPriceViewRoot(categoryState)
         }
 
         else -> {

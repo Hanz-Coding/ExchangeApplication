@@ -2,7 +2,6 @@ package com.plcoding.goldchart.gold.data.network.api
 
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetResponseDto
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCGoldHistoryResponseDto
-import com.plcoding.goldchart.gold.data.network.method.SJCBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field

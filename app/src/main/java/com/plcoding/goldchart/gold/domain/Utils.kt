@@ -4,7 +4,6 @@ object CompanyName {
     const val VCB = "VCB"
     const val SJC = "SJC"
     const val PNJ = "PNJ"
-    const val BTMC = "BTMC"
 }
 
 object AssetType {

@@ -1,6 +1,10 @@
 package com.plcoding.goldchart.gold.data.dto.pnj
 
+import com.google.gson.annotations.SerializedName
+
 data class PNJAssetResponseDto(
-    val `data`: List<PNJAssetDto>,
-    val updatetime: Long
+    @SerializedName("data")
+    val data: List<PNJAssetDto>,
+    @SerializedName("updatetime")
+    val updateTime: Long
 )

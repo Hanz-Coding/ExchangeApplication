@@ -10,7 +10,7 @@ import com.plcoding.goldchart.gold.data.utils.validatePNJName
 import com.plcoding.goldchart.gold.domain.CompanyName
 
 fun PNJAssetResponseDto.toDomain(): Currency {
-    val company = Company(CompanyName.PNJ, this.updatetime)
+    val company = Company(CompanyName.PNJ, this.updateTime)
     val assetList: List<Exchange> = this.data.map { dto -> dto.toDomain() }
     return Currency(company, assetList)
 }

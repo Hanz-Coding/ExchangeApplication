@@ -13,22 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.plcoding.goldchart.gold.presentation.CategoryState
-import com.plcoding.goldchart.gold.presentation.GoldPriceViewModel
 import com.plcoding.goldchart.gold.presentation.components.ItemCategory
 import com.plcoding.goldchart.gold.presentation.components.ItemMenuView
-import org.koin.androidx.compose.koinViewModel
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun SJCPriceViewRoot() {
-    val viewModel = koinViewModel<GoldPriceViewModel>()
-    val state by viewModel.stateSJC.collectAsStateWithLifecycle()
+fun SJCPriceViewRoot(categoryState: StateFlow<CategoryState>) {
+    val state by categoryState.collectAsStateWithLifecycle()
     Box(modifier = Modifier.fillMaxSize()) {
         if (state.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
-            println("hanz SJCPriceView")
             Column(modifier = Modifier.fillMaxSize()) {
                 ItemMenuView(state.currencyCompany)
                 SJCPriceView(state)

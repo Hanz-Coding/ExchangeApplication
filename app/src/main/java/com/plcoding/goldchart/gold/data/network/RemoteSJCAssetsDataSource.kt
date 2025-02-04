@@ -10,7 +10,6 @@ import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetResponseDto
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCGoldHistoryResponseDto
 import com.plcoding.goldchart.gold.data.mappers.toDomain
 import com.plcoding.goldchart.gold.data.network.api.SJCAssetApi
-import com.plcoding.goldchart.gold.data.network.method.SJCBody
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -18,14 +17,10 @@ class RemoteSJCAssetsDataSource(
     private val api: SJCAssetApi,
 ) : CurrencyDataSource {
     override suspend fun fetchCurrency(date: LocalDate): Result<Currency, DataError.RemoteError> {
-        // Chuyển đổi LocalDate sang chuỗi
         val formattedDate = date.format(dateFormater)
-        val sjcBody = SJCBody(
-            method = "GetSJCGoldPriceByDate",
-            toDate = formattedDate
-        )
+        val method = "GetSJCGoldPriceByDate"
         return safeCallRetrofit<SJCAssetResponseDto> {
-            api.getAssetSJCField(sjcBody.method, sjcBody.toDate)
+            api.getAssetSJCField(method, formattedDate)
         }.map { response -> response.toDomain() }
     }
 
@@ -49,5 +44,5 @@ class RemoteSJCAssetsDataSource(
 
     }
 
-    val dateFormater = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    private val dateFormater = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 }
