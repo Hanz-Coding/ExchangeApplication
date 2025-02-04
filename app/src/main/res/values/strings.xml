@@ -5,4 +5,10 @@
     <string name="menu_buy">Mua vào</string>
     <string name="menu_sell">Bán ra</string>
     <string name="category_gold">Giá Vàng</string>
+    <string name="buy_title">Mua vào</string>
+    <string name="buy_sjc_des">Giá cửa hàng bán ra mỗi lượng (đ)</string>
+    <string name="sell_title">Bán ra</string>
+    <string name="sell_sjc_des">Giá cửa hàng thu vào mỗi lượng (đ)</string>
+    <string name="transfer_usd_vcb_title">Chuyển khoản</string>
+    <string name="transfer_usd_vcs_des">Giá ngân hàng mua vào thông qua chuyển khoản mỗi ngoại tệ(đ)</string>
 </resources>

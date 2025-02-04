@@ -22,6 +22,4 @@ sealed interface Routes {
     @Serializable
     data object SettingScreen : Routes
 
-    @Serializable
-    data class AssetDetail(val title: String) : Routes
 }

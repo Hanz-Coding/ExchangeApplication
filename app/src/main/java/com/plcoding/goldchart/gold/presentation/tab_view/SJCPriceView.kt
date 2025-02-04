@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.plcoding.goldchart.gold.presentation.CategoryState
 import com.plcoding.goldchart.gold.presentation.GoldPriceViewModel
-import com.plcoding.goldchart.gold.presentation.components.ItemCategoryAssets
+import com.plcoding.goldchart.gold.presentation.components.ItemCategory
 import com.plcoding.goldchart.gold.presentation.components.ItemMenuView
 import org.koin.androidx.compose.koinViewModel
 
@@ -28,6 +28,7 @@ fun SJCPriceViewRoot() {
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
+            println("hanz SJCPriceView")
             Column(modifier = Modifier.fillMaxSize()) {
                 ItemMenuView(state.currencyCompany)
                 SJCPriceView(state)
@@ -41,7 +42,7 @@ fun SJCPriceView(state: CategoryState) {
     LazyColumn {
         val assetUIList = state.categoryAssetList
         items(assetUIList) { category ->
-            ItemCategoryAssets(category)
+            ItemCategory(category)
         }
     }
 }

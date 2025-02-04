@@ -1,17 +1,16 @@
 package com.plcoding.goldchart.gold.di
 
+import com.plcoding.goldchart.domain.Repository
+import com.plcoding.goldchart.domain.datasource.CurrencyDataSource
 import com.plcoding.goldchart.gold.data.network.RemotePNJAssetsDataSource
 import com.plcoding.goldchart.gold.data.network.RemoteSJCAssetsDataSource
 import com.plcoding.goldchart.gold.data.network.api.PNJAssetApi
 import com.plcoding.goldchart.gold.data.network.api.SJCAssetApi
-import com.plcoding.goldchart.gold.data.repository.AssetsRepositoryImpl
+import com.plcoding.goldchart.gold.data.repository.GoldRepositoryImpl
 import com.plcoding.goldchart.gold.data.utils.Constant
-import com.plcoding.goldchart.gold.domain.datasource.AssetsDataSource
-import com.plcoding.goldchart.gold.domain.repository.AssetsRepository
 import com.plcoding.goldchart.gold.presentation.GoldPriceViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -19,9 +18,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val goldModule = module {
-    single { RemoteSJCAssetsDataSource(get()) }.bind<AssetsDataSource>()
-    single { RemotePNJAssetsDataSource(get()) }.bind<AssetsDataSource>()
-    single { AssetsRepositoryImpl(get(), get(), get()) }.bind<AssetsRepository>()
+    single { RemoteSJCAssetsDataSource(get()) }.bind<CurrencyDataSource>()
+    single { RemotePNJAssetsDataSource(get()) }.bind<CurrencyDataSource>()
+    single(named("assetRepo")) { GoldRepositoryImpl(get(), get(), get()) }.bind<Repository>()
 
     single {
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -49,5 +48,5 @@ val goldModule = module {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    viewModelOf(::GoldPriceViewModel)
+    single { GoldPriceViewModel(get<Repository>(named("assetRepo"))) }
 }

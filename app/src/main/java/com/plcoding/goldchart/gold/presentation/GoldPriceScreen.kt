@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.plcoding.goldchart.gold.presentation.tab_view.PNJPriceViewRoot
 import com.plcoding.goldchart.gold.presentation.tab_view.SJCPriceViewRoot
 
 @Composable
@@ -81,7 +80,7 @@ val tabContents: @Composable (Int) -> Unit = { index ->
 
         1 -> {
             // Tab 2: Hiển thị Image
-            PNJPriceViewRoot()
+//            PNJPriceViewRoot()
         }
 
         2 -> {

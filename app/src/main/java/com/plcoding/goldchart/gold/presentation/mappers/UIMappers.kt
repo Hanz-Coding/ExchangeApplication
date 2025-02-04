@@ -1,40 +1,62 @@
 package com.plcoding.goldchart.gold.presentation.mappers
 
-import com.plcoding.goldchart.gold.domain.model.local.Currency
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyExchange
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyCompany
-import com.plcoding.goldchart.gold.presentation.model.CurrencyCompanyUI
-import com.plcoding.goldchart.gold.presentation.model.CurrencyExchangeUI
+import androidx.compose.ui.graphics.Color
+import com.plcoding.goldchart.domain.model.Company
+import com.plcoding.goldchart.domain.model.Currency
+import com.plcoding.goldchart.domain.model.Exchange
+import com.plcoding.goldchart.gold.presentation.model.CompanyUI
 import com.plcoding.goldchart.gold.presentation.model.CurrencyUI
-import com.plcoding.goldchart.gold.presentation.model.toDisplayNumber
+import com.plcoding.goldchart.gold.presentation.model.ExchangeUI
+import com.plcoding.goldchart.presentation.utils.toDisplayNumber
 
+val colorText: (Double) -> Color = {
+    if (it >= 0) Color(0xff08A045) else Color.Red
+}
+
+val colorBackground: (Double) -> Color = {
+    if (it >= 0) Color(0xffc7f9cc) else Color(0xffFFE2E1)
+}
+
+val percent: (Double, Double) -> Double = { change, previous ->
+    if (previous == 0.0) 0.0 else {
+        change * 100 / previous
+    }
+}
+
+fun Company.toUI(): CompanyUI {
+    return CompanyUI(
+        companyName = this.name,
+        updatedTime = this.updatedTime
+    )
+}
 
 fun Currency.toUI(): CurrencyUI {
     return CurrencyUI(
-        company = company.toUI(),
-        exchangeList = exchangeList.map { it.toUI() },
+        company = this.company.toUI(),
+        exchangeList = this.exchangeList.map { it.toDisplay() }
     )
 }
 
-fun CurrencyCompany.toUI(): CurrencyCompanyUI {
-    return CurrencyCompanyUI(
-        companyName = name,
-        updatedTime = updatedTime
-    )
-}
+fun Exchange.toDisplay(): ExchangeUI {
+    val buyChange = this.buy - this.previousBuy
+    val sellChange = this.sell - this.previousSell
 
-fun CurrencyExchange.toUI(): CurrencyExchangeUI {
-    return CurrencyExchangeUI(
-        currencyCode = currencyCode,
-        currencyName = currencyName,
-        currencyType = currencyType,
-        companyName = companyName,
-        iconUrl = iconUrl,
-        buy = buy.toDisplayNumber(),
-        sell = sell.toDisplayNumber(),
-        transfer = transfer.toDisplayNumber(),
-        previousBuy = previousBuy.toDisplayNumber(),
-        previousSell = previousSell.toDisplayNumber(),
-        previousTransfer = previousTransfer.toDisplayNumber()
+    val buyChangePercent = percent(buyChange, this.previousBuy)
+    val sellChangePercent = percent(sellChange, this.previousSell)
+
+    val buyColor = colorText(buyChange)
+    val sellColor = colorText(sellChange)
+    val backgroundColor = colorBackground(buyChange)
+    return ExchangeUI(
+        currencyName = this.currencyName,
+        buy = this.buy.toDisplayNumber().formatedValue,
+        buyChange = buyChange.toDisplayNumber().formatedValue,
+        buyChangePercent = "${buyChangePercent.toDisplayNumber().formatedValue}%",
+        buyColor = buyColor,
+        sell = this.sell.toDisplayNumber().formatedValue,
+        sellChange = sellChange.toDisplayNumber().formatedValue,
+        sellChangePercent = "${sellChangePercent.toDisplayNumber().formatedValue}%",
+        sellColor = sellColor,
+        backgroundColor = backgroundColor
     )
 }

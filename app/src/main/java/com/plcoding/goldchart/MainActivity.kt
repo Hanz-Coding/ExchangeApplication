@@ -32,16 +32,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.plcoding.goldchart.app.Routes
 import com.plcoding.goldchart.exchange.presentation.ExchangeScreenRoot
 import com.plcoding.goldchart.forum.presentation.ForumScreenRoot
 import com.plcoding.goldchart.gold.presentation.GoldPriceScreenRoot
-import com.plcoding.goldchart.home.presentation.HomeScreenRoot
-import com.plcoding.goldchart.home.presentation.components.AssetScreen
+import com.plcoding.goldchart.home.presentation.components.HomeScreenRoot
 import com.plcoding.goldchart.setting.presentation.SettingScreenRoot
-import com.plcoding.goldchart.ui.components.BottomNavUtil
-import com.plcoding.goldchart.ui.theme.GoldChartTheme
+import com.plcoding.goldchart.presentation.component.BottomNavUtil
+import com.plcoding.goldchart.presentation.theme.GoldChartTheme
 
 class MainActivity : ComponentActivity(), AnalyticLogger by AnalyticLoggerImpl() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -125,11 +123,6 @@ fun MainContent(navController: NavHostController) {
         ) {
             composable<Routes.HomeScreen> {
                 HomeScreenRoot()
-            }
-
-            composable<Routes.AssetDetail> { entry ->
-                val args = entry.toRoute<Routes.AssetDetail>()
-                AssetScreen(args.title)
             }
 
             composable<Routes.GoldPriceScreen> {

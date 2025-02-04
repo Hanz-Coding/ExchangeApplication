@@ -17,12 +17,12 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import coil.size.Scale
+import com.plcoding.goldchart.domain.model.Exchange
 import com.plcoding.goldchart.exchange.presentation.getCurrencyNameByCode
-import com.plcoding.goldchart.exchange.presentation.model.CurrencyExchangeUI
 
 @Composable
 fun ItemCurrencyExchange(
-    exchange: CurrencyExchangeUI,
+    exchange: Exchange,
     modifier: Modifier = Modifier,
 ) {
     Row(

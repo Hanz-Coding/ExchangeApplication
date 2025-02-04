@@ -27,11 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.plcoding.goldchart.exchange.data.mappers.formatLongToDate
+import com.plcoding.goldchart.domain.model.Company
+import com.plcoding.goldchart.domain.model.Currency
+import com.plcoding.goldchart.domain.utils.ResultWrapper
 import com.plcoding.goldchart.exchange.domain.CompanyName
+import com.plcoding.goldchart.exchange.domain.formatLongToDate
 import com.plcoding.goldchart.exchange.presentation.components.BIDVExchangeScreenRoot
 import com.plcoding.goldchart.exchange.presentation.components.VCBExchangeScreenRoot
-import com.plcoding.goldchart.exchange.presentation.model.CurrencyCompanyUI
 import com.plcoding.goldchart.exchange.presentation.state.ExchangeState
 import org.koin.androidx.compose.koinViewModel
 
@@ -56,7 +58,9 @@ fun ExchangeScreenRoot(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize().navigationBarsPadding()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .navigationBarsPadding()) {
         // ScrollableTabRow tạo thanh tab có thể cuộn ngang
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex, // Chỉ định tab được chọn
@@ -90,13 +94,13 @@ val tabContents: @Composable (Int, ExchangeState, (String) -> Unit) -> Unit =
             }
 
             1 -> {
-                BIDVExchangeScreenRoot(state)
+//                BIDVExchangeScreenRoot(state.takeValueOrThrow())
             }
         }
     }
 
 @Composable
-fun ExchangeMenuView(companyUI: CurrencyCompanyUI) {
+fun ExchangeMenuView(companyUI: Company) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val dateLong = companyUI.updatedTime
         val date = formatLongToDate(dateLong)

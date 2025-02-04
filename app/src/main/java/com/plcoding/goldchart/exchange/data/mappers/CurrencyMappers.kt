@@ -1,82 +1,75 @@
 package com.plcoding.goldchart.exchange.data.mappers
 
-import com.plcoding.goldchart.core.data.database.currency.CurrencyCompanyEntity
-import com.plcoding.goldchart.core.data.database.currency.CurrencyEntity
-import com.plcoding.goldchart.core.data.database.currency.CurrencyExchangeEntity
+import com.plcoding.goldchart.data.mappers.generateCurrencyCode
+import com.plcoding.goldchart.domain.model.Company
+import com.plcoding.goldchart.domain.model.Currency
+import com.plcoding.goldchart.domain.model.Exchange
+import com.plcoding.goldchart.exchange.data.Constant
 import com.plcoding.goldchart.exchange.data.dto.bidv.BIDVCurrencyResponseDto
 import com.plcoding.goldchart.exchange.data.dto.bidv.BIDVDataDto
 import com.plcoding.goldchart.exchange.data.dto.vcb.VCBCurrencyResponseDto
 import com.plcoding.goldchart.exchange.data.dto.vcb.VCBDataDto
-import com.plcoding.goldchart.exchange.domain.model.local.Company
-import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrency
-import com.plcoding.goldchart.exchange.domain.model.remote.RemoteCurrencyExchange
 import com.plcoding.goldchart.exchange.domain.CompanyName
-import com.plcoding.goldchart.exchange.data.Constant
-import com.plcoding.goldchart.exchange.domain.model.local.Currency
-import com.plcoding.goldchart.exchange.domain.model.local.CurrencyExchange
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-fun VCBDataDto.toDomain(): RemoteCurrencyExchange {
-    return RemoteCurrencyExchange(
-        currencyCode = currencyCode,
-        currencyName = currencyName,
-        currencyType = currencyCode,
+fun VCBDataDto.toDomain(): Exchange {
+    return Exchange(
+        currencyCode = generateCurrencyCode(CompanyName.VCB, currencyCode ?: ""),
+        currencyName = currencyName ?: "",
+        currencyType = currencyCode ?: "",
         companyName = CompanyName.VCB,
-        iconUrl = updateIconUrl(CompanyName.VCB, icon),
-        buy = cash.toDouble(),
-        sell = sell.toDouble(),
-        transfer = transfer.toDouble(),
+        iconUrl = generateIconUrl(CompanyName.VCB, icon ?: ""),
+        buy = buy?.toDouble() ?: 0.0,
+        sell = sell?.toDouble() ?: 0.0,
+        transfer = transfer?.toDouble() ?: 0.0,
+        previousTransfer = 0.0,
+        previousSell = 0.0,
+        previousBuy = 0.0
     )
 }
 
-fun updateIconUrl(companyName: String, iconUrl: String): String {
-    return when (companyName) {
-        CompanyName.VCB -> Constant.BASE_URL_VCB + iconUrl
-        CompanyName.BIDV -> Constant.BASE_URL_BIDV + iconUrl
-        else -> iconUrl
-    }
-}
-
-fun VCBCurrencyResponseDto.toDomain(): RemoteCurrency {
+fun VCBCurrencyResponseDto.toDomain(): Currency {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-    val updatedDate = dateFormat.parse(this.UpdatedDate)
+    val updatedDate = this.updatedDate?.let { dateFormat.parse(it) }
     val updateTime = updatedDate?.time ?: 0L
     val company = Company(CompanyName.VCB, updateTime)
 
-    return RemoteCurrency(company,
-        this.Data.map { dto ->
+    return Currency(
+        company,
+        this.data?.map { dto ->
             dto.toDomain()
-        })
+        } ?: emptyList()
+    )
 }
 
-fun BIDVCurrencyResponseDto.toDomain(): RemoteCurrency {
+fun BIDVCurrencyResponseDto.toDomain(): Currency {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-    val remoteDate = this.day_vi + " " + this.hour
+    val remoteDate = this.day_en + " " + this.hour
     val updatedDate = dateFormat.parse(remoteDate)
     val updateTime = updatedDate?.time ?: 0L
     val company = Company(CompanyName.BIDV, updateTime)
 
-    return RemoteCurrency(company,
+    return Currency(company,
         this.data.map { dto ->
             dto.toDomain()
         })
 }
 
-fun BIDVDataDto.toDomain(): RemoteCurrencyExchange {
-    return RemoteCurrencyExchange(
-        currencyCode = currency,
-        currencyName = nameVI,
-        currencyType = currency,
+
+fun BIDVDataDto.toDomain(): Exchange {
+    return Exchange(
+        currencyCode = currencyCode ?: "",
+        currencyName = nameVI ?: "",
+        currencyType = currencyCode ?: "",
         companyName = CompanyName.BIDV,
-        iconUrl = updateIconUrl(CompanyName.BIDV, image),
-        buy = convertStringToDouble(muaTm),
-        sell = convertStringToDouble(ban),
-        transfer = convertStringToDouble(muaCk),
+        iconUrl = generateIconUrl(CompanyName.BIDV, image ?: ""),
+        buy = convertStringToDouble(buy ?: ""),
+        sell = convertStringToDouble(sell ?: ""),
+        transfer = convertStringToDouble(transfer ?: ""),
+        previousTransfer = 0.0,
+        previousSell = 0.0,
+        previousBuy = 0.0
     )
 }
 
@@ -88,66 +81,10 @@ fun convertStringToDouble(input: String): Double {
     }
 }
 
-fun formatLongToDate(longTime: Long): String {
-    // Chuyển Long (miliseconds) thành LocalDateTime
-    val instant = Instant.ofEpochMilli(longTime)
-    val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-
-    // Định dạng thời gian theo kiểu HH:mm:ss dd/MM/yyyy
-    val formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")
-    return localDateTime.format(formatter)
-}
-
-fun CurrencyExchange.toEntity(): CurrencyExchangeEntity {
-    return CurrencyExchangeEntity(
-        currencyCodeName = currencyCode + companyName,
-        currencyCode = currencyCode,
-        currencyName = currencyName,
-        currencyType = currencyType,
-        companyName = companyName,
-        iconUrl = iconUrl,
-        buy = buy,
-        sell = sell,
-        transfer = transfer,
-        previousBuy = previousBuy,
-        previousSell = previousSell,
-        previousTransfer = previousTransfer
-    )
-}
-
-fun CurrencyExchangeEntity.toDomain(): CurrencyExchange {
-    return CurrencyExchange(
-        currencyCode = currencyCode,
-        currencyName = currencyName,
-        currencyType =currencyType,
-        companyName = companyName,
-        iconUrl = iconUrl,
-        buy = buy,
-        sell = sell,
-        transfer = transfer,
-        previousBuy = previousBuy,
-        previousSell = previousSell,
-        previousTransfer = previousTransfer
-    )
-}
-
-fun Company.toEntity(): CurrencyCompanyEntity {
-    return CurrencyCompanyEntity(
-        companyName = name,
-        updatedTime = updatedTime
-    )
-}
-
-fun CurrencyCompanyEntity.toDomain(): Company {
-    return Company(
-        name = companyName,
-        updatedTime = updatedTime
-    )
-}
-
-fun CurrencyEntity.toDomain(): Currency {
-    return Currency(
-        company = company.toDomain(),
-        exchangeList = exchangeList.map { it.toDomain() }
-    )
+fun generateIconUrl(companyName: String, iconUrl: String): String {
+    return when (companyName) {
+        CompanyName.VCB -> Constant.BASE_URL_VCB + iconUrl
+        CompanyName.BIDV -> Constant.BASE_URL_BIDV + iconUrl
+        else -> iconUrl
+    }
 }

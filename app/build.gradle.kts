@@ -82,6 +82,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
 
     implementation(libs.bundles.ktor)
+    implementation(libs.timber)
 
     testImplementation(libs.junit)
 

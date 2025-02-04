@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.plcoding.goldchart.R
 
 @Composable
-fun ItemCategoryText(category: String?) {
+fun ItemCategoryTitle(category: String?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -26,5 +27,12 @@ fun ItemCategoryText(category: String?) {
             color = Color.Black
         )
     }
+}
 
+@Preview
+@Composable
+private fun CategoryAssetsPreview() {
+    ItemCategory(
+        category = "Ho Chi Minh",
+    )
 }

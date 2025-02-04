@@ -2,11 +2,9 @@ package com.plcoding.goldchart.di
 
 import android.app.Application
 import androidx.room.Room
-import com.plcoding.goldchart.core.data.database.AssetDatabase
 import com.plcoding.goldchart.core.data.networking.HttpClientFactory
-import com.plcoding.goldchart.home.presentation.AssetsViewModel
+import com.plcoding.goldchart.data.database.AssetDatabase
 import io.ktor.client.engine.cio.CIO
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -27,5 +25,4 @@ val appModule = module {
     }.bind<AssetDatabase>()
 
     single { get<AssetDatabase>().currencyDAO }
-    viewModelOf(::AssetsViewModel)
 }

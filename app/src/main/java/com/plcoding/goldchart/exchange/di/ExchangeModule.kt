@@ -1,17 +1,16 @@
 package com.plcoding.goldchart.exchange.di
 
+import com.plcoding.goldchart.domain.Repository
+import com.plcoding.goldchart.domain.datasource.CurrencyDataSource
+import com.plcoding.goldchart.exchange.data.Constant
+import com.plcoding.goldchart.exchange.data.network.RemoteBIDVCurrencyDatasource
 import com.plcoding.goldchart.exchange.data.network.RemoteVCBCurrencyDatasource
 import com.plcoding.goldchart.exchange.data.network.api.BIDVCurrencyApi
 import com.plcoding.goldchart.exchange.data.network.api.VCBCurrencyApi
-import com.plcoding.goldchart.exchange.data.repository.CurrencyRepositoryImpl
-import com.plcoding.goldchart.exchange.data.Constant
-import com.plcoding.goldchart.exchange.data.network.RemoteBIDVCurrencyDatasource
-import com.plcoding.goldchart.exchange.domain.repository.CurrencyRepository
-import com.plcoding.goldchart.exchange.domain.datasource.CurrencyDataSource
+import com.plcoding.goldchart.exchange.data.repository.ExchangeRepositoryImpl
 import com.plcoding.goldchart.exchange.presentation.ExchangeViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -21,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val exchangeModule = module {
     single { RemoteVCBCurrencyDatasource(get()) }.bind<CurrencyDataSource>()
     single { RemoteBIDVCurrencyDatasource(get()) }.bind<CurrencyDataSource>()
-    single { CurrencyRepositoryImpl(get(), get(), get()) }.bind<CurrencyRepository>()
+    single (named("exchangeRepo")){ ExchangeRepositoryImpl(get(), get(), get()) }.bind<Repository>()
 
     single { get<Retrofit>(named("bidvRetrofit")).create(BIDVCurrencyApi::class.java) }
     single(named("bidvRetrofit")) {
@@ -47,5 +46,6 @@ val exchangeModule = module {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    viewModelOf(::ExchangeViewModel)
+    single { ExchangeViewModel(get<Repository>(named("exchangeRepo"))) }
+//    viewModelOf(::ExchangeViewModel)
 }

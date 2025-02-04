@@ -1,22 +1,22 @@
 package com.plcoding.goldchart.gold.data.mappers
 
+import com.plcoding.goldchart.domain.model.Company
+import com.plcoding.goldchart.domain.model.Currency
+import com.plcoding.goldchart.domain.model.Exchange
 import com.plcoding.goldchart.gold.data.dto.pnj.PNJAssetDto
 import com.plcoding.goldchart.gold.data.dto.pnj.PNJAssetResponseDto
 import com.plcoding.goldchart.gold.data.utils.validatePNJBrandType
 import com.plcoding.goldchart.gold.data.utils.validatePNJName
 import com.plcoding.goldchart.gold.domain.CompanyName
-import com.plcoding.goldchart.gold.domain.model.local.Currency
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyExchange
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyCompany
 
 fun PNJAssetResponseDto.toDomain(): Currency {
-    val company = CurrencyCompany(CompanyName.PNJ, this.updatetime)
-    val assetList: List<CurrencyExchange> = this.data.map { dto -> dto.toDomain() }
+    val company = Company(CompanyName.PNJ, this.updatetime)
+    val assetList: List<Exchange> = this.data.map { dto -> dto.toDomain() }
     return Currency(company, assetList)
 }
 
-fun PNJAssetDto.toDomain(): CurrencyExchange {
-    return CurrencyExchange(
+fun PNJAssetDto.toDomain(): Exchange {
+    return Exchange(
         currencyCode = CompanyName.PNJ + code,
         currencyName = validatePNJName(code),
         currencyType = validatePNJBrandType(code),

@@ -1,12 +1,13 @@
 package com.plcoding.goldchart.gold.data.mappers
 
+import com.plcoding.goldchart.domain.model.Company
+import com.plcoding.goldchart.domain.model.Currency
+import com.plcoding.goldchart.domain.model.Exchange
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetDto
 import com.plcoding.goldchart.gold.data.dto.sjc.SJCAssetResponseDto
+import com.plcoding.goldchart.gold.data.dto.sjc.SJCGoldHistoryResponseDto
 import com.plcoding.goldchart.gold.data.utils.validateSJCName
 import com.plcoding.goldchart.gold.domain.CompanyName
-import com.plcoding.goldchart.gold.domain.model.local.Currency
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyExchange
-import com.plcoding.goldchart.gold.domain.model.local.CurrencyCompany
 import java.time.LocalDate
 
 fun SJCAssetResponseDto.toDomain(): Currency {
@@ -18,21 +19,27 @@ fun SJCAssetResponseDto.toDomain(): Currency {
                 "dd/MM/yyyy"
             )
         }) ?: LocalDate.now().toEpochDay()
-    val company = CurrencyCompany(CompanyName.SJC, updateTime)
+    val company = Company(CompanyName.SJC, updateTime)
 
-    val exchangeList: List<CurrencyExchange> = this.data.map { dto -> dto.toDomain() }
+    val exchangeList: List<Exchange> = this.data.map { dto -> dto.toDomain() }
     return Currency(company, exchangeList)
 }
 
-fun SJCAssetDto.toDomain(): CurrencyExchange {
-    return CurrencyExchange(
-        currencyCode = CompanyName.SJC + Id.toString(),
-        currencyName = validateSJCName(CompanyName.SJC + Id.toString()),
-        currencyType = BranchName,
+fun SJCGoldHistoryResponseDto.toDomain(): Currency {
+    val company = Company(CompanyName.SJC, LocalDate.now().toEpochDay())
+    val exchangeList: List<Exchange>? = this.data?.map { dto -> dto.toDomain() }
+    return Currency(company, exchangeList ?: emptyList())
+}
+
+fun SJCAssetDto.toDomain(): Exchange {
+    return Exchange(
+        currencyCode = CompanyName.SJC + id.toString(),
+        currencyName = validateSJCName(CompanyName.SJC + id.toString()),
+        currencyType = branchName,
         companyName = CompanyName.SJC,
         iconUrl = "",
-        buy = BuyValue,
-        sell = SellValue,
+        buy = buyValue,
+        sell = sellValue,
         transfer = 0.0,
         previousTransfer = 0.0,
         previousSell = 0.0,
