@@ -22,4 +22,12 @@ sealed interface Routes {
     @Serializable
     data object SettingScreen : Routes
 
+    @Serializable
+    data object LoginScreen : Routes
+
+    @Serializable
+    data object SignupScreen : Routes
+
+
+
 }

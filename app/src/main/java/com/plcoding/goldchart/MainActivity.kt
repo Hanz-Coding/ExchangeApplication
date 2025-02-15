@@ -27,17 +27,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.goldchart.app.Routes
-import com.plcoding.goldchart.exchange.presentation.ExchangeScreenRoot
-import com.plcoding.goldchart.forum.presentation.ForumScreenRoot
-import com.plcoding.goldchart.gold.presentation.GoldPriceScreenRoot
-import com.plcoding.goldchart.home.presentation.components.HomeScreenRoot
-import com.plcoding.goldchart.setting.presentation.SettingScreenRoot
+import com.plcoding.goldchart.presentation.MainContent
 import com.plcoding.goldchart.presentation.component.BottomNavUtil
 import com.plcoding.goldchart.presentation.theme.GoldChartTheme
 
@@ -107,37 +99,6 @@ fun NavigationBarCustom(
                     )
                 }
             )
-        }
-    }
-}
-
-@Composable
-fun MainContent(navController: NavHostController) {
-    NavHost(
-        navController = navController,
-        startDestination = Routes.AssetsGraph
-    )
-    {
-        navigation<Routes.AssetsGraph>(
-            startDestination = Routes.HomeScreen
-        ) {
-            composable<Routes.HomeScreen> {
-                HomeScreenRoot()
-            }
-
-            composable<Routes.GoldPriceScreen> {
-                GoldPriceScreenRoot()
-            }
-
-            composable<Routes.ExchangeScreen> {
-                ExchangeScreenRoot()
-            }
-            composable<Routes.ForumScreen> {
-                ForumScreenRoot()
-            }
-            composable<Routes.SettingScreen> {
-                SettingScreenRoot()
-            }
         }
     }
 }

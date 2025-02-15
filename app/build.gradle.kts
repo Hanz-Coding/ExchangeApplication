@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.plcoding.goldchart"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.plcoding.goldchart"
@@ -67,6 +67,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.credentials.core)
     kapt(libs.androidx.room.compiler)
 
     implementation(platform(libs.androidx.compose.bom))
